@@ -1,0 +1,888 @@
+<!DOCTYPE html>  
+<html lang="ar" dir="rtl" id="htmlRoot">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title data-translate="pageTitle">📦 مولد صفحة APK الاحترافي</title>  
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">  
+<style>  
+  :root {  
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);  
+    --card-bg: rgba(15, 23, 42, 0.85);  
+    --card-border: rgba(99, 102, 241, 0.3);  
+    --primary: #6366f1;  
+    --primary-hover: #4f46e5;  
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);  
+    --text-main: #f8fafc;  
+    --text-muted: #94a3b8;  
+    --input-bg: rgba(30, 41, 59, 0.7);  
+    --input-border: rgba(75, 85, 99, 0.5);  
+    --success: #10b981;  
+    --error: #ef4444;  
+  }  
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 16px;
+    line-height: 1.8;
+  }
+
+  .container {
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 32px;
+    padding: 50px 40px;
+    max-width: 780px;
+    width: 100%;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    border: 1px solid var(--card-border);
+    margin: auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--accent-gradient);
+    margin: 18px auto 0;
+    border-radius: 4px;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+
+  .header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  .field {
+    margin-bottom: 26px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .required {
+    color: #ec4899;
+    font-size: 0.95rem;
+    margin-right: 4px;
+  }
+
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 16px 22px;
+    border-radius: 16px;
+    border: 2px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-main);
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  input[type="text"]:focus, textarea:focus {
+    border-color: var(--primary);
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #64748b;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 130px;
+  }
+
+  /* رفع الملفات */
+  .upload-box {
+    position: relative;
+    border: 2px dashed rgba(99, 102, 241, 0.4);
+    border-radius: 20px;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 35px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .upload-box:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .upload-box.has-file {
+    border-color: var(--success);
+    border-style: solid;
+    background: rgba(16, 185, 129, 0.08);
+  }
+
+  .upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .upload-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    display: block;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+  }
+
+  .upload-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+
+  .upload-box.has-file .upload-text { color: var(--success); }
+
+  /* معاينة الأيقونة */
+  .icon-preview-wrap {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    padding: 16px;
+    background: rgba(30, 41, 59, 0.6);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .icon-preview-wrap.visible { display: flex; }
+
+  .icon-preview {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    object-fit: cover;
+    background: #0f172a;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .icon-preview-info {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  /* زر التوليد */
+  .generate-btn {
+    width: 100%;
+    padding: 20px;
+    background: var(--accent-gradient);
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.45);
+    letter-spacing: 0.5px;
+  }
+
+  .generate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 45px rgba(99, 102, 241, 0.65);
+  }
+
+  .generate-btn:active {
+    transform: translateY(0);
+  }
+
+  .generate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* الحالة */
+  .status {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-height: 28px;
+    padding: 16px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    display: none;
+  }
+
+  .status.show { display: block; }
+
+  .status.success {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+  }
+
+  .status.error {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+  }
+
+  /* حقوق تيليجرام */
+  .telegram-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+  .telegram-footer a {
+    color: #818cf8;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+  .telegram-footer a:hover {
+    color: #a5b4fc;
+    text-decoration: underline;
+  }
+
+  /* إعلانات الصفحة الناشئة */
+  .ads-bottom {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .ad-slot {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+    min-height: 20px;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 10px; }
+    .container { padding: 30px 20px; border-radius: 24px; }
+    .header h1 { font-size: 2rem; }
+    .header p { font-size: 1rem; }
+    input[type="text"], textarea { padding: 14px 16px; font-size: 1rem; }
+    .generate-btn { font-size: 1.15rem; padding: 18px; }
+  }
+</style>
+</head>  
+<body>  
+<div class="container">  
+  <div class="header">  
+    <h1 data-translate="mainTitle">📦 مولد صفحة APK</h1>  
+    <p data-translate="mainSubtitle">أنشئ صفحة تحميل احترافية لتطبيقك في ثوانٍ معدودة</p>  
+  </div>  
+
+  <!-- اسم التطبيق -->  
+  <div class="field">  
+    <label for="appName"><span data-translate="appNameLabel">اسم التطبيق</span> <span class="required">*</span></label>  
+    <input type="text" id="appName" data-translate-placeholder="appNamePlaceholder" placeholder="مثال: تطبيقي الرائع">  
+  </div>  
+
+  <!-- تسمية ملف صفحة الـ HTML الناتجة -->  
+  <div class="field">  
+    <label for="pageFileName"><span data-translate="pageFileLabel">اسم ملف صفحة التحميل (HTML)</span> <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400;" data-translate="optionalText">(اختياري)</span></label>  
+    <input type="text" id="pageFileName" data-translate-placeholder="pageFilePlaceholder" placeholder="مثال: my-app-download (بدون .html)">  
+  </div>  
+
+  <!-- الوصف -->  
+  <div class="field">  
+    <label for="appDesc" data-translate="appDescLabel">وصف التطبيق</label>  
+    <textarea id="appDesc" data-translate-placeholder="appDescPlaceholder" placeholder="اكتب وصفاً قصيراً وجذاباً عن مميزات التطبيق..."></textarea>  
+  </div>  
+
+  <!-- الإصدار -->  
+  <div class="field">  
+    <label for="appVersion" data-translate="appVersionLabel">الإصدار</label>  
+    <input type="text" id="appVersion" data-translate-placeholder="appVersionPlaceholder" placeholder="مثال: 1.0.0">  
+  </div>  
+
+  <!-- صورة الأيقونة -->  
+  <div class="field">  
+    <label><span data-translate="appIconLabel">أيقونة التطبيق</span> <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400;" data-translate="optionalText">(اختياري)</span></label>  
+    <div class="upload-box" id="iconUploadBox">  
+      <input type="file" id="iconInput" accept="image/png,image/jpeg,image/jpg,image/webp,image/gif">  
+      <span class="upload-icon">🖼️</span>  
+      <div class="upload-text" id="iconUploadText" data-translate="iconUploadText">اضغط لاختيار صورة الأيقونة</div>  
+      <div class="upload-hint" data-translate="iconHintText">PNG أو JPG (مستحسن مربعة 512×512)</div>  
+    </div>  
+    <div class="icon-preview-wrap" id="iconPreviewWrap">  
+      <img class="icon-preview" id="iconPreview" alt="معاينة الأيقونة">  
+      <div class="icon-preview-info" id="iconPreviewInfo"></div>  
+    </div>  
+  </div>  
+
+  <!-- ملف APK -->  
+  <div class="field">  
+    <label><span data-translate="apkFileLabel">ملف APK</span> <span class="required">*</span></label>  
+    <div class="upload-box" id="apkUploadBox">  
+      <input type="file" id="apkFile" accept=".apk,application/vnd.android.package-archive">  
+      <span class="upload-icon">📱</span>  
+      <div class="upload-text" id="apkUploadText" data-translate="apkUploadText">اضغط لاختيار ملف APK</div>  
+      <div class="upload-hint" data-translate="apkHintText">ملف بصيغة .apk فقط</div>  
+    </div>  
+  </div>  
+
+  <!-- زر التوليد -->  
+  <button class="generate-btn" id="generateBtn" type="button" data-translate="generateBtnText">🚀 توليد وتحميل صفحة HTML</button>
+
+  <!-- الحالة -->  
+  <div class="status" id="status"></div>  
+
+  <!-- إعلان 1 داخل الكارد للنسخة الناشئة -->  
+  <div class="ad-slot">  
+    <script>  
+      atOptions = {  
+        'key' : '9f7ba435def1ada0bc7ef0bbd3da755c',  
+        'format' : 'iframe',  
+        'height' : 50,  
+        'width' : 320,  
+        'params' : {}  
+      };  
+    </script>  
+    <script src="https://bauval.org/22/9f7ba435def1ada0bc7ef0bbd3da755c"></script>  
+  </div>  
+
+  <!-- حقوق تيليجرام للنسخة الناشئة -->  
+  <div class="telegram-footer">  
+    <span data-translate="telegramRights">تيليجرام:</span> <a href="https://t.me/AEapkeditor" target="_blank">https://t.me/AEapkeditor</a>  
+  </div>  
+</div>  
+
+<!-- إعلان 2 للنسخة الناشئة -->  
+<div class="ads-bottom">  
+  <div id="container-97800c5ded4ebfbaa62808e49cda7920"></div>  
+</div>  
+<script async="async" data-cfasync="false" src="https://bauval.org/21/97800c5ded4ebfbaa62808e49cda7920"></script>  
+
+<!-- إعلان 3 للنسخة الناشئة -->  
+<script data-cfasync="false" src="https://bauval.org/14/f21c0771fcb145fa6d38ba9c7db6ea40"></script>  
+
+<script>  
+(function() {  
+  // تحديد اللغة تلقائياً من لغة الهاتف/المتصفح
+  const userLang = (navigator.language || navigator.userLanguage || 'ar').toLowerCase();
+  const isArabic = userLang.startsWith('ar');
+  
+  const htmlRoot = document.getElementById('htmlRoot');
+  if (!isArabic) {
+    htmlRoot.setAttribute('lang', 'en');
+    htmlRoot.setAttribute('dir', 'ltr');
+  }
+
+  // قاموس النصوص للغتين (العربية والإنجليزية تلقائياً حسب الهاتف)
+  const translations = {
+    ar: {
+      pageTitle: "📦 مولد صفحة APK الاحترافي",
+      mainTitle: "📦 مولد صفحة APK",
+      mainSubtitle: "أنشئ صفحة تحميل احترافية لتطبيقك في ثوانٍ معدودة",
+      appNameLabel: "اسم التطبيق",
+      appNamePlaceholder: "مثال: تطبيقي الرائع",
+      pageFileLabel: "اسم ملف صفحة التحميل (HTML)",
+      pageFilePlaceholder: "مثال: my-app-download (بدون .html)",
+      optionalText: "(اختياري)",
+      appDescLabel: "وصف التطبيق",
+      appDescPlaceholder: "اكتب وصفاً قصيراً وجذاباً عن مميزات التطبيق...",
+      appVersionLabel: "الإصدار",
+      appVersionPlaceholder: "مثال: 1.0.0",
+      appIconLabel: "أيقونة التطبيق",
+      iconUploadText: "اضغط لاختيار صورة الأيقونة",
+      iconHintText: "PNG أو JPG (مستحسن مربعة 512×512)",
+      apkFileLabel: "ملف APK",
+      apkUploadText: "اضغط لاختيار ملف APK",
+      apkHintText: "ملف بصيغة .apk فقط",
+      generateBtnText: "🚀 توليد وتحميل صفحة HTML",
+      selectApkFirst: "⚠️ الرجاء اختيار ملف APK صالح أولاً",
+      notApk: "⚠️ الملف المختار ليس بصيغة APK",
+      successGen: "✅ تم توليد وتنزيل صفحة HTML بنجاح!",
+      errorGen: "❌ حدث خطأ أثناء توليد الصفحة",
+      apkLoaded: "تم تحميل ملف APK بنجاح ✔",
+      apkReadError: "❌ حدث خطأ أثناء قراءة ملف APK",
+      iconReadError: "❌ حدث خطأ أثناء قراءة صورة الأيقونة",
+      defaultAppTitle: "تطبيق APK",
+      defaultDesc: "لا يوجد وصف متاح.",
+      downloadBtnText: "⬇️ تحميل APK",
+      fileSizePrefix: "الحجم: ",
+      mbText: "ميجابايت",
+      loadErrorText: "⚠️ تعذر تحميل الملف",
+      telegramRights: "تيليجرام:"
+    },
+    en: {
+      pageTitle: "📦 Professional APK Page Generator",
+      mainTitle: "📦 APK Page Generator",
+      mainSubtitle: "Create a professional download page for your app in seconds",
+      appNameLabel: "App Name",
+      appNamePlaceholder: "e.g., My Awesome App",
+      pageFileLabel: "HTML Page File Name",
+      pageFilePlaceholder: "e.g., my-app-download (without .html)",
+      optionalText: "(Optional)",
+      appDescLabel: "App Description",
+      appDescPlaceholder: "Write a short and catchy description...",
+      appVersionLabel: "Version",
+      appVersionPlaceholder: "e.g., 1.0.0",
+      appIconLabel: "App Icon",
+      iconUploadText: "Click to select app icon",
+      iconHintText: "PNG or JPG (Square 512x512 recommended)",
+      apkFileLabel: "APK File",
+      apkUploadText: "Click to select APK file",
+      apkHintText: ".apk files only",
+      generateBtnText: "🚀 Generate & Download HTML Page",
+      selectApkFirst: "⚠️ Please select a valid APK file first",
+      notApk: "⚠️ Selected file is not an APK file",
+      successGen: "✅ HTML page generated and downloaded successfully!",
+      errorGen: "❌ Error occurred while generating the page",
+      apkLoaded: "APK file loaded successfully ✔",
+      apkReadError: "❌ Error reading APK file",
+      iconReadError: "❌ Error reading icon image",
+      defaultAppTitle: "APK App",
+      defaultDesc: "No description available.",
+      downloadBtnText: "⬇️ Download APK",
+      fileSizePrefix: "Size: ",
+      mbText: "MB",
+      loadErrorText: "⚠️ Unable to load file",
+      telegramRights: "Telegram:"
+    }
+  };
+
+  const t = isArabic ? translations.ar : translations.en;
+
+  // تطبيق الترجمة على الواجهة بناءً على لغة الهاتف
+  document.querySelectorAll('[data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    if (t[key]) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-translate-placeholder');
+    if (t[key]) el.placeholder = t[key];
+  });
+  document.title = t.pageTitle;
+
+  const apkInput = document.getElementById('apkFile');  
+  const apkUploadBox = document.getElementById('apkUploadBox');  
+  const apkUploadText = document.getElementById('apkUploadText');  
+  const iconInput = document.getElementById('iconInput');  
+  const iconUploadBox = document.getElementById('iconUploadBox');  
+  const iconUploadText = document.getElementById('iconUploadText');  
+  const iconPreviewWrap = document.getElementById('iconPreviewWrap');  
+  const iconPreview = document.getElementById('iconPreview');  
+  const iconPreviewInfo = document.getElementById('iconPreviewInfo');  
+  const generateBtn = document.getElementById('generateBtn');  
+  const statusEl = document.getElementById('status');  
+  const appNameEl = document.getElementById('appName');  
+  const pageFileNameEl = document.getElementById('pageFileName');  
+  const appDescEl = document.getElementById('appDesc');  
+  const appVersionEl = document.getElementById('appVersion');  
+  
+  let apkBase64 = null;  
+  let apkFileName = '';  
+  let iconBase64 = null;  
+  
+  // -------- رفع ملف APK --------  
+  apkInput.addEventListener('change', function(e) {  
+    const file = e.target.files[0];  
+    hideStatus();  
+    if (!file) {  
+      apkBase64 = null;  
+      apkFileName = '';  
+      apkUploadText.textContent = t.apkUploadText;  
+      apkUploadBox.classList.remove('has-file');  
+      return;  
+    }  
+    if (!file.name.toLowerCase().endsWith('.apk')) {  
+      apkUploadText.textContent = t.notApk;  
+      apkUploadBox.classList.remove('has-file');  
+      apkBase64 = null;  
+      apkFileName = '';  
+      return;  
+    }  
+    apkFileName = file.name;  
+    const sizeMB = (file.size / (1024 * 1024)).toFixed(2);  
+    apkUploadText.textContent = `✅ ${file.name} — ${sizeMB} MB`;  
+    apkUploadBox.classList.add('has-file');  
+  
+    const reader = new FileReader();  
+    reader.onload = function(ev) {  
+      apkBase64 = ev.target.result.split(',')[1];  
+      showStatus(t.apkLoaded, 'success');  
+    };  
+    reader.onerror = function() {  
+      showStatus(t.apkReadError, 'error');  
+      apkBase64 = null;  
+    };  
+    reader.readAsDataURL(file);  
+  });  
+  
+  // -------- رفع صورة الأيقونة --------  
+  iconInput.addEventListener('change', function(e) {  
+    const file = e.target.files[0];  
+    hideStatus();  
+    if (!file) {  
+      iconBase64 = null;  
+      iconPreviewWrap.classList.remove('visible');  
+      iconUploadText.textContent = t.iconUploadText;  
+      iconUploadBox.classList.remove('has-file');  
+      return;  
+    }  
+    if (!file.type.startsWith('image/')) {  
+      iconUploadText.textContent = '⚠️ ' + (isArabic ? 'الرجاء اختيار صورة صالحة' : 'Please select a valid image');  
+      iconUploadBox.classList.remove('has-file');  
+      return;  
+    }  
+    iconUploadText.textContent = `✅ ${file.name}`;  
+    iconUploadBox.classList.add('has-file');  
+  
+    const reader = new FileReader();  
+    reader.onload = function(ev) {  
+      iconBase64 = ev.target.result;  
+      iconPreview.src = iconBase64;  
+      iconPreviewWrap.classList.add('visible');  
+      const sizeKB = (file.size / 1024).toFixed(1);  
+      iconPreviewInfo.textContent = `${file.name} — ${sizeKB} KB`;  
+    };  
+    reader.onerror = function() {  
+      showStatus(t.iconReadError, 'error');  
+      iconBase64 = null;  
+    };  
+    reader.readAsDataURL(file);  
+  });  
+  
+  function showStatus(msg, type) {  
+    statusEl.textContent = msg;  
+    statusEl.className = 'status show ' + type;  
+  }  
+  function hideStatus() {  
+    statusEl.className = 'status';  
+    statusEl.textContent = '';  
+  }  
+  
+  function escapeHtml(str) {  
+    return String(str)  
+      .replace(/&/g, '&amp;')  
+      .replace(/</g, '&lt;')  
+      .replace(/>/g, '&gt;')  
+      .replace(/"/g, '&quot;')  
+      .replace(/'/g, '&#39;');  
+  }  
+  
+  function buildHtmlPage() {  
+    const appName = escapeHtml(appNameEl.value.trim() || t.defaultAppTitle);  
+    const appDesc = escapeHtml(appDescEl.value.trim() || t.defaultDesc);  
+    const appVersion = escapeHtml(appVersionEl.value.trim() || '1.0.0');  
+    const fileNameEscaped = escapeHtml(apkFileName || 'app.apk');  
+    const safeDownloadName = fileNameEscaped.replace(/[^\w\u0600-\u06FF\.\-]/g, '_') || 'app.apk';  
+  
+    const iconHtml = iconBase64  
+      ? `<img src="${iconBase64}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:24px;display:block;">`  
+      : `<span style="font-size:48px;">📱</span>`;  
+  
+    return `<!DOCTYPE html>  
+<html lang="${isArabic ? 'ar' : 'en'}" dir="${isArabic ? 'rtl' : 'ltr'}">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta name="google-site-verification" content="google8234a331ddac7aed" />  
+<title>${appName} — APK Download</title>  
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">  
+<style>  
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }  
+  body {  
+    background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1f1b2e 100%);  
+    color: #f9fafb;  
+    min-height: 100vh;  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    justify-content: center;  
+    padding: 24px 16px;  
+    line-height: 1.7;  
+  }  
+  .card {  
+    background: rgba(17, 24, 39, 0.8);  
+    backdrop-filter: blur(20px);  
+    -webkit-backdrop-filter: blur(20px);  
+    border-radius: 32px;  
+    padding: 48px 36px 38px;  
+    max-width: 520px;  
+    width: 100%;  
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;  
+    border: 1px solid rgba(99, 102, 241, 0.2);  
+    text-align: center;  
+  }  
+  .app-icon {  
+    width: 110px;  
+    height: 110px;  
+    border-radius: 28px;  
+    margin: 0 auto 24px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);  
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);  
+    overflow: hidden;  
+  }  
+  h1 {  
+    font-size: 1.9rem;  
+    font-weight: 900;  
+    margin-bottom: 10px;  
+    color: #fff;  
+    word-break: break-word;  
+  }  
+  .version {  
+    display: inline-block;  
+    background: rgba(99, 102, 241, 0.15);  
+    color: #818cf8;  
+    border: 1px solid rgba(99, 102, 241, 0.35);  
+    font-size: 0.9rem;  
+    font-weight: 700;  
+    padding: 6px 18px;  
+    border-radius: 30px;  
+    margin-bottom: 24px;  
+  }  
+  .desc {  
+    color: #cbd5e1;  
+    font-size: 1.05rem;  
+    line-height: 1.8;  
+    margin-bottom: 32px;  
+    white-space: pre-wrap;  
+    word-break: break-word;  
+  }  
+  .download-btn {  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    gap: 12px;  
+    width: 100%;  
+    padding: 20px 24px;  
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);  
+    color: #fff;  
+    border-radius: 18px;  
+    text-decoration: none;  
+    font-weight: 900;  
+    font-size: 1.25rem;  
+    transition: transform 0.25s, box-shadow 0.25s;  
+    box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);  
+  }  
+  .download-btn:hover {  
+    transform: translateY(-3px);  
+    box-shadow: 0 16px 42px rgba(16, 185, 129, 0.55);  
+  }  
+  .download-btn:active { transform: translateY(0); }  
+  .file-info {  
+    margin-top: 20px;  
+    font-size: 0.9rem;  
+    color: #9ca3af;  
+    word-break: break-all;  
+  }  
+  .size-note { margin-top: 6px; font-size: 0.88rem; color: #6b7280; font-weight: 600; }  
+  
+  /* حقوق تيليجرام للصفحة الناتجة */  
+  .telegram-footer {  
+    margin-top: 20px;  
+    font-size: 0.9rem;  
+    color: #9ca3af;  
+  }  
+  .telegram-footer a {  
+    color: #818cf8;  
+    text-decoration: none;  
+    font-weight: 700;  
+  }  
+  .telegram-footer a:hover {  
+    text-decoration: underline;  
+  }  
+
+  /* إعلانات للصفحة الناتجة */  
+  .ads-bottom {  
+    margin-top: 25px;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    min-height: 60px;  
+  }  
+  .ad-slot {  
+    display: flex;  
+    justify-content: center;  
+    width: 100%;  
+    margin-top: 15px;  
+    min-height: 20px;  
+  }  
+  
+  @media (max-width: 500px) {  
+    .card { padding: 36px 22px 30px; border-radius: 24px; }  
+    h1 { font-size: 1.5rem; }  
+    .app-icon { width: 95px; height: 95px; border-radius: 24px; }  
+    .download-btn { font-size: 1.1rem; padding: 18px; }  
+  }  
+</style>  
+</head>  
+<body>  
+<div class="card">  
+  <div class="app-icon">${iconHtml}</div>  
+  <h1>${appName}</h1>  
+  <div class="version">${isArabic ? 'الإصدار' : 'Version'} ${appVersion}</div>  
+  <div class="desc">${appDesc}</div>  
+  <a class="download-btn" id="dlBtn" href="#" download="${safeDownloadName}">  
+    ${t.downloadBtnText}  
+  </a>  
+  <div class="file-info">${fileNameEscaped}</div>  
+  <div class="size-note" id="sizeNote"></div>  
+
+  <!-- إعلان 1 للصفحة الناتجة -->  
+  <div class="ad-slot">  
+    <script>  
+      atOptions = {  
+        'key' : '9f7ba435def1ada0bc7ef0bbd3da755c',  
+        'format' : 'iframe',  
+        'height' : 50,  
+        'width' : 320,  
+        'params' : {}  
+      };  
+    <\/script>  
+    <script src="https://bauval.org/22/9f7ba435def1ada0bc7ef0bbd3da755c"><\/script>  
+  </div>  
+
+  <!-- حقوق تيليجرام للصفحة الناتجة -->  
+  <div class="telegram-footer">  
+    ${t.telegramRights} <a href="https://t.me/AEapkeditor" target="_blank">https://t.me/AEapkeditor</a>  
+  </div>  
+</div>  
+
+<!-- إعلان 2 للصفحة الناتجة -->  
+<div class="ads-bottom">  
+  <div id="container-97800c5ded4ebfbaa62808e49cda7920"></div>  
+</div>  
+<script async="async" data-cfasync="false" src="https://bauval.org/21/97800c5ded4ebfbaa62808e49cda7920"><\/script>  
+
+<!-- إعلان 3 للصفحة الناتجة -->  
+<script data-cfasync="false" src="https://bauval.org/14/f21c0771fcb145fa6d38ba9c7db6ea40"><\/script>  
+  
+<script>  
+(function() {  
+  var base64 = "${apkBase64}";  
+  var mime = "application/vnd.android.package-archive";  
+  var fileName = "${safeDownloadName.replace(/"/g, '\\\\"')}";  
+  
+  function base64ToBlob(b64, mimeType) {  
+    var byteChars = atob(b64);  
+    var byteNumbers = new Array(byteChars.length);  
+    for (var i = 0; i < byteChars.length; i++) {  
+      byteNumbers[i] = byteChars.charCodeAt(i);  
+    }  
+    var byteArray = new Uint8Array(byteNumbers);  
+    return new Blob([byteArray], {type: mimeType});  
+  }  
+  
+  try {  
+    var blob = base64ToBlob(base64, mime);  
+    var url = URL.createObjectURL(blob);  
+    var btn = document.getElementById('dlBtn');  
+    btn.href = url;  
+    var sizeMB = (blob.size / (1024 * 1024)).toFixed(2);  
+    document.getElementById('sizeNote').textContent = '${t.fileSizePrefix}' + sizeMB + ' ${t.mbText}';  
+    window.addEventListener('beforeunload', function() { URL.revokeObjectURL(url); });  
+  } catch (err) {  
+    console.error(err);  
+    var dlBtn = document.getElementById('dlBtn');  
+    dlBtn.textContent = '${t.loadErrorText}';  
+    dlBtn.style.background = '#4b5563';  
+    dlBtn.style.color = '#9ca3af';  
+    dlBtn.style.pointerEvents = 'none';  
+  }  
+})();  
+<\/script>  
+</body>  
+</html>`;  
+  }  
+  
+  generateBtn.addEventListener('click', function() {  
+    if (!apkBase64) {  
+      showStatus(t.selectApkFirst, 'error');  
+      return;  
+    }  
+    if (!apkFileName.toLowerCase().endsWith('.apk')) {  
+      showStatus(t.notApk, 'error');  
+      return;  
+    }  
+  
+    try {  
+      const html = buildHtmlPage();  
+      const blob = new Blob([html], {type: 'text/html;charset=utf-8'});  
+      const url = URL.createObjectURL(blob);  
+      const a = document.createElement('a');  
+      a.href = url;  
+      
+      let customPageName = pageFileNameEl.value.trim();
+      let baseName = customPageName ? customPageName : (appNameEl.value.trim() || 'app_page');
+      baseName = baseName.replace(/[^\w\u0600-\u06FF\-\.]/g, '_');  
+      if (!baseName.toLowerCase().endsWith('.html')) baseName += '.html';  
+      
+      a.download = baseName;  
+      document.body.appendChild(a);  
+      a.click();  
+      document.body.removeChild(a);  
+      setTimeout(() => URL.revokeObjectURL(url), 5000);  
+  
+      showStatus(t.successGen, 'success');  
+    } catch (err) {  
+      console.error(err);  
+      showStatus(t.errorGen, 'error');  
+    }  
+  });  
+})();  
+</script>  
+</body>  
+</html>
